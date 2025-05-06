@@ -1,5 +1,7 @@
 const swaggerJsdoc = require('swagger-jsdoc');
 
+const path = require('path');
+
 const options = {
     definition: {
         openapi: '3.0.0',
@@ -10,8 +12,12 @@ const options = {
         },
         servers: [
             {
+                url: 'http://localhost:4000',
+                description: 'Local development server',
+            },
+            {
                 url: 'https://backwbd.vercel.app',
-                description: 'Development server',
+                description: 'Production server',
             },
         ],
         components: {
@@ -24,7 +30,10 @@ const options = {
             },
         },
     },
-    apis: ['../controllers/*.js', '../routers/*.js'], // Path to the API docs
+    apis: [
+        path.join(__dirname, '../controllers/*.js'), 
+        path.join(__dirname, '../routers/*.js')
+    ], // Absolute paths to the API docs
 };
 
 const specs = swaggerJsdoc(options);

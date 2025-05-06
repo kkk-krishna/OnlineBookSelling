@@ -16,7 +16,7 @@ const options = {
                 description: 'Local development server',
             },
             {
-                url: 'https://backwbd.vercel.app',
+                url: 'https://backend-navy-chi-24.vercel.app',
                 description: 'Production server',
             },
         ],

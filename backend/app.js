@@ -30,7 +30,7 @@ app.use(Express.json())
 app.use(cors({
     origin: [
         process.env.CORS_ORIGIN || 'http://localhost:3000',
-        'https://backwbd.vercel.app',
+        'https://backend-navy-chi-24.vercel.app',
         'http://localhost:4000',
         '*'
     ],

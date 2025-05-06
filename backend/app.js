@@ -28,7 +28,14 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use(Express.json())
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    origin: [
+        process.env.CORS_ORIGIN || 'http://localhost:3000',
+        'https://backwbd.vercel.app',
+        'http://localhost:4000',
+        '*'
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }))
 const userModel4  = require("./Models/bookspage.js");

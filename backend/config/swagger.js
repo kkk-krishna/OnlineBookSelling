@@ -12,12 +12,8 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:4000',
-                description: 'Local development server',
-            },
-            {
-                url: 'https://backwbd.vercel.app',
-                description: 'Production server',
+                url: process.env.SERVER_URL || 'http://localhost:4000',
+                description: 'Development server',
             },
         ],
         components: {

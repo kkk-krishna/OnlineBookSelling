@@ -93,7 +93,7 @@ class RequestController {
       
       // Validate required fields
       if (!isbn || !title || !author || !quantity || !email || !phone) {
-        return res.status(400).send("All  m fields are required");
+        return res.status(400).send("All fields are required");
       }
 
       // Validate quantity is positive

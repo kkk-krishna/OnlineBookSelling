@@ -16,80 +16,25 @@ const { default: mongoose } = require("mongoose");
 
 // Only connect to the main database if not running tests
 if (process.env.NODE_ENV !== 'test') {
-    const mongoose = require('mongoose');
-    const dns = require('dns');
-    const url = require('url');
-
-    // Network diagnostics function
-    function checkNetworkConnectivity(hostname) {
-        return new Promise((resolve, reject) => {
-            console.log(`Checking network connectivity for: ${hostname}`);
-            dns.lookup(hostname, (err, address, family) => {
-                if (err) {
-                    console.error(`DNS Lookup Error for ${hostname}:`, err);
-                    reject(err);
-                } else {
-                    console.log(`DNS Resolved: ${hostname} -> ${address} (IPv${family})`);
-                    resolve({ address, family });
-                }
-            });
+    mongoose.connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(() => {
+        console.log('Successfully connected to MongoDB');
+    }).catch(err => {
+        console.error('MongoDB Connection Error:', {
+            message: err.message,
+            name: err.name,
+            code: err.code
         });
-    }
-
-    // Parse MongoDB URI
-    const parsedUri = url.parse(process.env.MONGODB_URI);
-    const hostname = parsedUri.hostname;
-
-    // Perform network check before MongoDB connection
-    checkNetworkConnectivity(hostname)
-        .then(() => {
-            console.log('Attempting to connect to MongoDB with URI:', process.env.MONGODB_URI ? 'URI provided' : 'NO URI FOUND');
-            
-            mongoose.set('debug', true); // Enable Mongoose debug mode
-
-            return mongoose.connect(process.env.MONGODB_URI, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                serverSelectionTimeoutMS: 10000, // Reduce timeout to 10 seconds
-                socketTimeoutMS: 45000, // 45 seconds socket timeout
-                connectTimeoutMS: 10000 // 10 seconds connection timeout
-            });
-        })
-        .then(() => {
-            console.log('Successfully connected to MongoDB');
-        })
-        .catch(err => {
-            console.error('MongoDB Connection Comprehensive Error Report:', {
-                message: err.message,
-                name: err.name,
-                stack: err.stack,
-                code: err.code,
-                hostname: hostname
-            });
-            
-            // Detailed error categorization
-            switch (err.name) {
-                case 'MongoNetworkTimeoutError':
-                    console.error('Network Timeout Detected. Possible causes:');
-                    console.error('1. Incorrect MongoDB URI');
-                    console.error('2. Network connectivity issues');
-                    console.error('3. Firewall blocking connection');
-                    console.error('4. MongoDB server not running');
-                    break;
-                case 'MongoError':
-                    console.error('MongoDB Server Error. Check server configuration.');
-                    break;
-                default:
-                    console.error('Unexpected connection error.');
-            }
-        });
+    });
 }
 
 app.use(Express.json())
 app.use(cors({
     origin: [
         process.env.CORS_ORIGIN || 'http://localhost:3000',
-        'https://online-book-selling.vercel.app',
+        'https://backend-navy-chi-24.vercel.app',
         'http://localhost:4000',
         '*'
     ],

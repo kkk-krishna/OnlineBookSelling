@@ -29,16 +29,17 @@ const AddBook = () => {
     }
 
     // Validate ISBN-10: Must be exactly 10 digits
-  if (name === "ISBN_10" && (value.length > 10 || !/^\d*$/.test(value))) {
-    alert("ISBN-10 must contain exactly 10 digits.");
-    return;
-  }
+    if (name === "ISBN_10" && (value.length > 10 || !/^\d*$/.test(value))) {
+      alert("ISBN-10 must contain exactly 10 digits.");
+      return;
+    }
 
-  // Validate ISBN-13: Must be exactly 13 digits
-  if (name === "ISBN_13" && (value.length > 13 || !/^\d*$/.test(value))) {
-    alert("ISBN-13 must contain exactly 13 digits.");
-    return;
-  }
+    // Validate ISBN-13: Must be exactly 13 digits
+    if (name === "ISBN_13" && (value.length > 13 || !/^\d*$/.test(value))) {
+      alert("ISBN-13 must contain exactly 13 digits.");
+      return;
+    }
+
     setFormData({
       ...formData,
       [name]: value
@@ -104,8 +105,8 @@ const AddBook = () => {
             name="Released" 
             value={formData.Released} 
             onChange={handleChange} 
+            max={today}
             required 
-            min={today}
           />
 
           <label htmlFor="Author">Author:</label>

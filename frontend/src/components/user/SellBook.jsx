@@ -35,16 +35,26 @@ const SellBook = () => {
     }
 
     // Validate ISBN-10: Must be exactly 10 digits
-  if (name === "ISBN_10" && (value.length > 10 || !/^\d*$/.test(value))) {
-    alert("ISBN-10 must contain exactly 10 digits.");
-    return;
-  }
+    if (name === "ISBN_10" && (value.length > 10 || !/^\d*$/.test(value))) {
+      alert("ISBN-10 must contain exactly 10 digits.");
+      return;
+    }
 
-  // Validate ISBN-13: Must be exactly 13 digits
-  if (name === "ISBN_13" && (value.length > 13 || !/^\d*$/.test(value))) {
-    alert("ISBN-13 must contain exactly 13 digits.");
-    return;
-  }
+    // Validate ISBN-13: Must be exactly 13 digits
+    if (name === "ISBN_13" && (value.length > 13 || !/^\d*$/.test(value))) {
+      alert("ISBN-13 must contain exactly 13 digits.");
+      return;
+    }
+
+    // Validate Released Date: Must be exactly today's date
+    if (name === "Released") {
+      const todayDate = getTodayDate();
+      if (value > todayDate) {
+        alert("Publication date must be today's date.");
+        return;
+      }
+    }
+
     setFormData({
       ...formData,
       [name]: value
@@ -126,7 +136,7 @@ const SellBook = () => {
                     name={key}
                     value={formData[key]}
                     onChange={handleChange}
-                    min={key === "Released" ? getTodayDate() : undefined} // Add min for Released
+                    max={key === "Released" ? getTodayDate() : undefined} // Add min for Released
                   />
                 )}
                 {errors[key] && <span className="error-message">{errors[key]}</span>}

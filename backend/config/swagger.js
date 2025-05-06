@@ -6,7 +6,7 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Book Store API',
+            title: 'Book Store APIN',
             version: '1.0.0',
             description: 'API documentation for the Book Store application',
         },
@@ -16,7 +16,7 @@ const options = {
                 description: 'Local development server',
             },
             {
-                url: 'https://backend-navy-chi-24.vercel.app',
+                url: 'https://online-book-selling.vercel.app',
                 description: 'Production server',
             },
         ],
